@@ -1,9 +1,15 @@
 const express = require('express');
 const app     = express();
-
+const bodyParser = require('body-parser');
 // We our requiring our model
 // Our model by convention should Capitalized
 const Fruits = require('./models/fruits');
+
+// Setting up middleWare
+// Middleware our functions that happen sychronously
+// in the request from the client on the server
+app.use(bodyParser.urlencoded({extended: false}));
+
 
 // MVC - Architecture Pattern
 // Model View Controller
@@ -35,6 +41,15 @@ app.get('/fruits', (req, res) => {
 });
 
 
+app.get('/fruits/new', (req, res) => {
+  res.render('new.ejs');
+});
+
+
+app.post('/fruits', (req, res) => {
+  console.log(req.body, ' this is where our info from the fruit form will live');
+  res.send('we got your fruit')
+});
 // url params, is extra stuff we can
 // put in our url for our server to dynamically
 // read
