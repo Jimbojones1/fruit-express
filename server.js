@@ -100,7 +100,18 @@ app.delete('/fruits/:id', (req, res) => {
 });
 
 
+app.put('/fruits/:id', (req, res) => {
+  console.log(req.params.id, ' id in the put route');
+  console.log(req.body, ' this should be our form data');
+  if(req.body.readyToEat === 'on'){
+    req.body.readyToEat = true;
+  } else {
+    req.body.readyToEat = false;
+  }
+  Fruits[req.params.id] = req.body;
 
+  res.redirect('/fruits')
+})
 
 
 
