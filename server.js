@@ -48,7 +48,15 @@ app.get('/fruits/new', (req, res) => {
 
 app.post('/fruits', (req, res) => {
   console.log(req.body, ' this is where our info from the fruit form will live');
-  res.send('we got your fruit')
+
+  if(req.body.readyToEat === 'on'){
+    req.body.readyToEat = true;
+  } else {
+    req.body.readyToEat = false;
+  }
+
+  Fruits.push(req.body);
+  res.redirect('/fruits')
 });
 // url params, is extra stuff we can
 // put in our url for our server to dynamically
