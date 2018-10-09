@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
 // Index route
 // Shows all the fruits
 app.get('/fruits', (req, res) => {
-  res.send(Fruits);
+  res.render('index.ejs', {fruits: Fruits});
 });
 
 

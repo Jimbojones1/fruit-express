@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="/css/app.css">
+    </head>
+    <body>
+        <h1>Fruits index page</h1>
+        <ul>
+            <% for(let i = 0; i < fruits.length; i++){ %>
+                <li>
+                  The <a href="/fruits/<%=i%>"><%=fruits[i].name; %></a> is  <%=fruits[i].color; %>.
+                  <% if(fruits[i].readyToEat === true){ %>
+                    It is ready to eat
+                  <% } else { %>
+                    It is not ready to eat
+                  <% } %>
+                  <!--  ADD DELETE FORM HERE-->
+
+                </li>
+            <% } %>
+        </ul>
+        <nav>
+            <a href="/fruits/new">Create a New Fruit</a>
+        </nav>
+    </body>
+</html>
