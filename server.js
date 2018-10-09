@@ -59,9 +59,22 @@ app.post('/fruits', (req, res) => {
   Fruits.push(req.body);
   res.redirect('/fruits')
 });
+
+
+app.get('/fruits/:id/edit', (req, res) => {
+  res.render('edit.ejs', {
+    fruit: Fruits[req.params.id],
+    id: req.params.id
+  });
+});
+
+
+
 // url params, is extra stuff we can
 // put in our url for our server to dynamically
 // read
+
+
 
 // url params - is a variable that we
 // can capture in the url
