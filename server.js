@@ -1,6 +1,7 @@
 const express = require('express');
 const app     = express();
 const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 // We our requiring our model
 // Our model by convention should Capitalized
 const Fruits = require('./models/fruits');
@@ -9,7 +10,7 @@ const Fruits = require('./models/fruits');
 // Middleware our functions that happen sychronously
 // in the request from the client on the server
 app.use(bodyParser.urlencoded({extended: false}));
-
+app.use(methodOverride('_method'));
 
 // MVC - Architecture Pattern
 // Model View Controller
@@ -79,7 +80,11 @@ app.get('/fruits/:id', (req, res) => {
 });
 
 
-
+app.delete('/fruits/:id', (req, res) => {
+  console.log(req.params.id, ' id in delete route');
+  Fruits.splice(req.params.id, 1);
+  res.redirect('/fruits');
+});
 
 
 
