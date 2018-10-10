@@ -2,15 +2,20 @@ const express = require('express');
 const app     = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
-// We our requiring our model
-// Our model by convention should Capitalized
-const Fruits = require('./models/fruits');
+// Require our controller
+const fruitsController = require('./controllers/fruits');
+
+
 
 // Setting up middleWare
 // Middleware our functions that happen sychronously
 // in the request from the client on the server
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
+
+// /fruits here, sets up every route in the fruitscontroller
+// aka the whole router object we exporting to the route /fruits
+app.use('/fruits', fruitsController);
 
 // MVC - Architecture Pattern
 // Model View Controller
@@ -34,84 +39,6 @@ app.get('/', (req, res) => {
 });
 
 
-
-// Index route
-// Shows all the fruits
-app.get('/fruits', (req, res) => {
-  res.render('index.ejs', {fruits: Fruits});
-});
-
-
-app.get('/fruits/new', (req, res) => {
-  res.render('new.ejs');
-});
-
-
-app.post('/fruits', (req, res) => {
-  console.log(req.body, ' this is where our info from the fruit form will live');
-
-  if(req.body.readyToEat === 'on'){
-    req.body.readyToEat = true;
-  } else {
-    req.body.readyToEat = false;
-  }
-
-  Fruits.push(req.body);
-  res.redirect('/fruits')
-});
-
-
-app.get('/fruits/:id/edit', (req, res) => {
-  res.render('edit.ejs', {
-    fruit: Fruits[req.params.id],
-    id: req.params.id
-  });
-});
-
-
-
-// url params, is extra stuff we can
-// put in our url for our server to dynamically
-// read
-
-
-
-// url params - is a variable that we
-// can capture in the url
-
-// Show route
-// Shows a single fruit
-app.get('/fruits/:id', (req, res) => {
-  console.log(req.params);
-
-  // The property name becomes a variable
-  // within the ejs page
-  res.render('show.ejs', {
-    fruit: Fruits[req.params.id],
-    jim: 'jim'
-  });
-});
-
-
-app.delete('/fruits/:id', (req, res) => {
-  console.log(req.params.id, ' id in delete route');
-  Fruits.splice(req.params.id, 1);
-  res.redirect('/fruits');
-});
-
-
-app.put('/fruits/:id', (req, res) => {
-  console.log(req.params.id, ' id in the put route');
-  console.log(req.body, ' this should be our form data');
-  if(req.body.readyToEat === 'on'){
-    req.body.readyToEat = true;
-  } else {
-    req.body.readyToEat = false;
-  }
-  Fruits[req.params.id] = req.body;
-
-  res.redirect('/fruits')
-})
 
 
 
