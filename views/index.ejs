@@ -10,18 +10,18 @@
         <ul>
             <% for(let i = 0; i < fruits.length; i++){ %>
                 <li>
-                  The <a href="/fruits/<%=i%>"><%=fruits[i].name; %></a> is  <%=fruits[i].color; %>.
+                  The <a href="/fruits/<%=fruits[i].id%>"><%=fruits[i].name; %></a> is  <%=fruits[i].color; %>.
                   <% if(fruits[i].readyToEat === true){ %>
                     It is ready to eat
                   <% } else { %>
                     It is not ready to eat
                   <% } %>
                   <!--  ADD DELETE FORM HERE-->
-                  <form action="/fruits/<%=i%>?_method=DELETE" method="POST">
+                  <form action="/fruits/<%=fruits[i].id%>?_method=DELETE" method="POST">
                     <input type="submit" value="delete">
                   </form>
 
-                  <a href="/fruits/<%=i%>/edit">Edit <%=fruits[i].name%></a>
+                  <a href="/fruits/<%=fruits[i].id%>/edit">Edit <%=fruits[i].name%></a>
                 </li>
             <% } %>
         </ul>

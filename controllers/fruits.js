@@ -7,7 +7,16 @@ const Fruits = require('../models/fruits');
 // Index route
 // Shows all the fruits
 router.get('/', (req, res) => {
-  res.render('index.ejs', {fruits: Fruits});
+
+  Fruits.find({}, (err, allFruits) => {
+    if(err){
+      console.log(err);
+    } else {
+      // allFruits, is still an array
+      res.render('index.ejs', {fruits: allFruits});
+    }
+  })
+
 });
 
 
@@ -24,9 +33,16 @@ router.post('/', (req, res) => {
   } else {
     req.body.readyToEat = false;
   }
+  // Rewrite this code to use mongodb
+  Fruits.create(req.body, (err, createdFruit) => {
+    if(err){
+      console.log(err)
+    } else {
+      console.log(createdFruit);
+      res.redirect('/fruits')
+    }
+  })
 
-  Fruits.push(req.body);
-  res.redirect('/fruits')
 });
 
 
