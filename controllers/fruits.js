@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
       // allFruits, is still an array
       res.render('index.ejs', {fruits: allFruits});
     }
-  })
+  });
 
 });
 
@@ -98,9 +98,12 @@ router.put('/:id', (req, res) => {
   } else {
     req.body.readyToEat = false;
   }
-  Fruits[req.params.id] = req.body;
 
-  res.redirect('/fruits')
+  Fruits.findByIdAndUpdate(req.params.id, req.body, (err, updatedModel) => {
+    res.redirect('/fruits')
+  });
+
+
 })
 
 module.exports = router;
