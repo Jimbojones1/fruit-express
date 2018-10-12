@@ -2,6 +2,9 @@ const express = require('express');
 const app     = express();
 const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+// require our database
+require('./db/db');
+
 // Require our controller
 const fruitsController = require('./controllers/fruits');
 
@@ -13,6 +16,8 @@ const fruitsController = require('./controllers/fruits');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(methodOverride('_method'));
 
+// Your controllers should always  be last in your
+// middleware stack
 // /fruits here, sets up every route in the fruitscontroller
 // aka the whole router object we exporting to the route /fruits
 app.use('/fruits', fruitsController);
