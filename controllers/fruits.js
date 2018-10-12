@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
     if(err){
       console.log(err);
     } else {
+      console.log(allFruits)
       // allFruits, is still an array
       res.render('index.ejs', {fruits: allFruits});
     }
@@ -47,10 +48,14 @@ router.post('/', (req, res) => {
 
 
 router.get('/:id/edit', (req, res) => {
-  res.render('edit.ejs', {
-    fruit: Fruits[req.params.id],
-    id: req.params.id
+
+  Fruits.findById(req.params.id, (err, foundFruit) => {
+      res.render('edit.ejs', {
+        fruit: foundFruit,
+
+      });
   });
+
 });
 
 
@@ -68,20 +73,20 @@ router.get('/:id/edit', (req, res) => {
 // Shows a single fruit
 router.get('/:id', (req, res) => {
   console.log(req.params);
-
-  // The property name becomes a variable
-  // within the ejs page
-  res.render('show.ejs', {
-    fruit: Fruits[req.params.id],
-    jim: 'jim'
+  Fruits.findById(req.params.id, (err, foundFruit) => {
+    console.log(foundFruit, ' foundFruit')
+      res.render('show.ejs', {
+        fruit: foundFruit
+      });
   });
 });
 
 
 router.delete('/:id', (req, res) => {
   console.log(req.params.id, ' id in delete route');
-  Fruits.splice(req.params.id, 1);
-  res.redirect('/fruits');
+  Fruits.findByIdAndRemove(req.params.id, (err, deleteFruit) => {
+    res.redirect('/fruits');
+  });
 });
 
 
